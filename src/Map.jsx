@@ -2,25 +2,25 @@ import React, {useState, useEffect} from 'react';
 import {Map, TileLayer, Circle} from 'react-leaflet';
 
 export function CovidMap ({data}) {
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    if (!data) return;
+  // const [index, setIndex] = useState(0);
+  // useEffect(() => {
+  //   if (!data) return;
 
-    const interval = setTimeout(() => {
-      if (index >= data[1].confirmedCases.length - 2) {
-        return;
-      }
+  //   const interval = setTimeout(() => {
+  //     if (index >= data[1].confirmedCases.length - 2) {
+  //       return;
+  //     }
 
-      setIndex(i => i + 1);
-    }, 100);
-    return () => clearTimeout(interval);
-  }, [index, data]);
+  //     setIndex(i => i + 1);
+  //   }, 100);
+  //   return () => clearTimeout(interval);
+  // }, [index, data]);
 
   return (
     <div style={{width: '100%', height: '100%'}}>
-      <Map center={[0, 0]} zoom={2} zoomControl={false}>
+      <Map center={[30, 0]} zoom={2} zoomControl={false}>
         <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'/>
-        {data && <Cases data={data} index={index} />}
+        {data && <Cases data={data} />}
       </Map>
     </div>
   );
@@ -49,7 +49,7 @@ function Cases ({data, index}) {
     <React.Fragment>
       {data.map(datum => {
 
-        const cases = datum.confirmedCases[index];
+        const cases = datum.data.confirmed; //datum.confirmedCases[index];
         if (!cases) {
           return null;
         }
@@ -57,7 +57,7 @@ function Cases ({data, index}) {
           // console.log('WTF empty lat or lng', datum)
           return null;
         }
-        console.log('datum', datum)
+        // console.log('datum', datum)
         const radius = toRadius(cases);
 
         const lat = isNaN(datum.lat) ? 0 : datum.lat;

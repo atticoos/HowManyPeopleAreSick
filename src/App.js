@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import moment from 'moment';
 import {useTotalCases} from './data/useTotalCases';
-import {useHistoricalData} from './data/useHistoricalData';
-import {Stat} from './Stat';
+import {useHistoricalData, useCombinedHistoricalData} from './data/useHistoricalData';
+import {Stats} from './Stats';
 import {Sites} from './Sites';
 import {CovidMap} from './Map';
+import {DateScrubber} from './DateScrubber';
 
 import bg from './images/background.png';
 import './App.css';
@@ -29,71 +31,96 @@ function useTickingData (data) {
   })).filter(datum => !isNaN(datum.confirmedCases));
 }
 
+function useDataForDate(countries, date) {
+  countries = countries || [];
+  return countries.map(country => ({
+    ...country,
+    data: country.data.find(d => d.date === date) || country.data[country.data.length - 1]
+  }));
+}
+
+function useTickingDate (from, to, tickRate = 100) {
+  const [date, setDate] = useState(from);
+
+  useEffect(() => {
+    const f = moment(from);
+    const t = moment(to);
+    const d = moment(date);
+
+    if (f.isSameOrAfter(t, 'day') || d.clone().isSameOrAfter(t, 'day')) {
+      return;
+    }
+
+    const interval = setTimeout(() => {
+      setDate(d => moment(d).clone().add(1, 'd').format('M/D/YY'));
+    }, tickRate);
+
+    return () => clearTimeout(interval);
+  }, [from, to, date]);
+
+  useEffect(() => {
+    setDate(from);
+  }, [from, to]);
+
+  return date;
+}
+
 function App() {
-  const {loading, data, error} = useTotalCases();
-  const historicalData = useHistoricalData();
-  const tickingData = useTickingData(historicalData.data);
+  const combinedData = useCombinedHistoricalData();
+  const sampleData = combinedData.data ? combinedData.data[0].data : null;
 
-  const total = tickingData.reduce((total, datum) => total + datum.confirmedCases, 0);
+  const toDate = sampleData ? sampleData[sampleData.length - 1].date : moment().subtract(1, 'day').format('M/D/YY');
+  const fromDate = sampleData ? sampleData[0].date : toDate;
+  const date = useTickingDate(
+    fromDate,
+    toDate,
+    80
+  );
+  const dataByDay = useDataForDate(combinedData.data, date);
 
+  console.log('combined', {date, combinedData, dataByDay});
 
 
   return (
     <Container>
-      {/* <BG /> */}
-
-      <div style={{
-        position: 'fixed',
-        zIndex: 1,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      }}>
-      <CovidMap
-        data={historicalData.data}
-      />
-      </div>
+      <MapContainer>
+        <CovidMap data={dataByDay} />
+      </MapContainer>
       <Content>
-        <Stat
-          number={total} //data ? data.cases : 198178}
-          label="confirmed cases"
-          color="red"
-        />
-        <Row>
-          <div style={{marginRight: 48}}>
-            <Stat
-              number={data ? data.recovered : 81734}
-              label="recovered"
-              color="green"
-              size="small"
-            />
-          </div>
-          <Stat
-            number={data ? data.deaths : 7965}
-            label="deaths"
-            color="blue"
-            size="small"
+        <Stats data={dataByDay} />
+
+        <DateScrubberContainer>
+          <DateScrubber
+            from={fromDate}
+            to={toDate}
+            date={date}
+            onDateChanged={() => {}}
           />
-        </Row>
-
-
-        {/* <div style={{marginTop: 46}}>
-          <Sites />
-        </div> */}
+        </DateScrubberContainer>
       </Content>
     </Container>
   );
 }
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 const Container = styled.div`
   background-color: #222;
   height: 100%;
+`;
+
+const DateScrubberContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+
+const MapContainer = styled.div`
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 const Content = styled.div`
