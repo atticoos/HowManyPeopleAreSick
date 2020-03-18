@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [10.x]
     steps:
       - uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node-version }}
@@ -17,8 +17,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install and Test
         run: |
-          yarn
-          yarn test
+          npm install
         env:
           CI: true
 
@@ -32,6 +31,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@master
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
+          BRANCH: gh-pages-new
           FOLDER: build
           BUILD_SCRIPT: yarn && yarn build
