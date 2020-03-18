@@ -54,7 +54,7 @@ function App() {
   const date = useTickingDate(
     fromDate,
     toDate,
-    80
+    120
   );
   const dataByDay = useDataForDate(combinedData.data, date);
 
