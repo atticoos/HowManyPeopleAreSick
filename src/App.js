@@ -1,20 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {useTotalCases} from './data/useTotalCases';
+import {useHistoricalData} from './data/useHistoricalData';
 import {Stat} from './Stat';
 import {Sites} from './Sites';
+import {CovidMap} from './Map';
+
 import bg from './images/background.png';
 import './App.css';
 
+function useTickingData (data) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!data || index === data[0].confirmedCases.length - 1) return;
+
+    const interval = setTimeout(() => {
+      setIndex(i => i + 1);
+    }, 100);
+    return () => clearTimeout(interval);
+  }, [index, data]);
+
+  if (!data) return [];
+
+  return data.map(datum => ({
+    ...datum,
+    confirmedCases: datum.confirmedCases[index]
+  })).filter(datum => !isNaN(datum.confirmedCases));
+}
+
 function App() {
   const {loading, data, error} = useTotalCases();
+  const historicalData = useHistoricalData();
+  const tickingData = useTickingData(historicalData.data);
+
+  const total = tickingData.reduce((total, datum) => total + datum.confirmedCases, 0);
+
+
 
   return (
     <Container>
-      <BG />
+      {/* <BG /> */}
+
+      <div style={{
+        position: 'fixed',
+        zIndex: 1,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }}>
+      <CovidMap
+        data={historicalData.data}
+      />
+      </div>
       <Content>
         <Stat
-          number={data ? data.cases : 198178}
+          number={total} //data ? data.cases : 198178}
           label="confirmed to be sick"
           color="red"
         />
@@ -34,9 +76,11 @@ function App() {
             size="small"
           />
         </Row>
-        <div style={{marginTop: 46}}>
+
+
+        {/* <div style={{marginTop: 46}}>
           <Sites />
-        </div>
+        </div> */}
       </Content>
     </Container>
   );

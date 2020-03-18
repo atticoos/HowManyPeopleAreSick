@@ -1,26 +1,5 @@
 import {useState, useEffect} from 'react';
-
-function useHttpState() {
-  const [state, setState] = useState({
-    loading: false,
-    data: null,
-    error: null
-  });
-
-  return {
-    ...state,
-    setLoading() {
-      setState(s => ({...s, loading: true}));
-    },
-    setData(data) {
-      setState({data, loading: false, error: null});
-    },
-    setError(error) {
-      setState(s => ({...s, loading: false, error}));
-    }
-  };
-}
-
+import {useHttpState} from './useHttpState';
 
 export function useTotalCases() {
   const httpState = useHttpState();
