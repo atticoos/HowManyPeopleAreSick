@@ -24,6 +24,7 @@ const Number = styled.h1`
   color: ${props => colors[props.color]};
   font-size: ${props => props.size === 'large' ? '96px' : '64px'};
   margin-bottom: 0px;
+  text-shadow: 0 1px 12px #222;
 `;
 
 const Byline = styled.span`
