@@ -33,4 +33,4 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages-new
           FOLDER: build
-          BUILD_SCRIPT: npm install && npm run build && cp CNAME build/CNAME
+          BUILD_SCRIPT: npm install && npm run build && cp CNAME build/CNAME && rm build/service-worker.js
