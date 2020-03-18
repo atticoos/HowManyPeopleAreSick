@@ -12,10 +12,6 @@ export function DateScrubber ({
 }) {
   const dateRange = useDateRange(from, to);
 
-  const dateIndex = dateRange.indexOf(date);
-
-  console.log('range', dateRange);
-
   return (
     <Container>
       {dateRange.map(tickDate => (
@@ -32,16 +28,6 @@ export function DateScrubber ({
     </Container>
   );
 }
-
-// const Marker = styled.div`
-//   position: absolute;
-//   bottom: 0;
-//   background-color: ${Colors.BLUE};
-//   width: 6px;
-//   height: 32px;
-//   left: ${props => (props.position * 100)}%;
-//   transition-duration: 100ms;
-// `
 
 const Container = styled.div`
   position: relative;

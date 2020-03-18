@@ -11,26 +11,6 @@ import {DateScrubber} from './DateScrubber';
 import bg from './images/background.png';
 import './App.css';
 
-function useTickingData (data) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (!data || index === data[0].confirmedCases.length - 1) return;
-
-    const interval = setTimeout(() => {
-      setIndex(i => i + 1);
-    }, 100);
-    return () => clearTimeout(interval);
-  }, [index, data]);
-
-  if (!data) return [];
-
-  return data.map(datum => ({
-    ...datum,
-    confirmedCases: datum.confirmedCases[index]
-  })).filter(datum => !isNaN(datum.confirmedCases));
-}
-
 function useDataForDate(countries, date) {
   countries = countries || [];
   return countries.map(country => ({
@@ -77,9 +57,6 @@ function App() {
     80
   );
   const dataByDay = useDataForDate(combinedData.data, date);
-
-  console.log('combined', {date, combinedData, dataByDay});
-
 
   return (
     <Container>
