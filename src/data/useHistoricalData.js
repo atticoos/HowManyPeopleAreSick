@@ -1,3 +1,4 @@
+import {fetch} from 'whatwg-fetch';
 import {useHttpState} from './useHttpState';
 import { useEffect } from 'react';
 
