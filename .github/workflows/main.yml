@@ -32,6 +32,6 @@ jobs:
         env:
           PUBLIC_URL: 'https://howmanypeoplearesick.com'
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages-new
+          BRANCH: gh-pages
           FOLDER: build
           BUILD_SCRIPT: npm install && npm run build && cp CNAME build/CNAME && rm build/service-worker.js
