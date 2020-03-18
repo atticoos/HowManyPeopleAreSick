@@ -18,7 +18,7 @@ export function CovidMap ({data}) {
 
   return (
     <div style={{width: '100%', height: '100%'}}>
-      <Map center={[30, 0]} zoom={2} zoomControl={false}>
+      <Map center={[30, 0]} zoom={3} zoomControl={false}>
         <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'/>
         {data && <Cases data={data} />}
       </Map>
