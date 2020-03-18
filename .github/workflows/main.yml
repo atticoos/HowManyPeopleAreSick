@@ -30,6 +30,7 @@ jobs:
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@master
         env:
+          PUBLIC_URL: 'https://howmanypeoplearesick.com'
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages-new
           FOLDER: build
