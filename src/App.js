@@ -57,7 +57,7 @@ function App() {
       <Content>
         <Stat
           number={total} //data ? data.cases : 198178}
-          label="confirmed to be sick"
+          label="confirmed cases"
           color="red"
         />
         <Row>
