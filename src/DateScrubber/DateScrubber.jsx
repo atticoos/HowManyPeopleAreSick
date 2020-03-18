@@ -19,6 +19,7 @@ export function DateScrubber ({
           key={tickDate}
           adjacent={(tickDate - 1) === date || (tickDate + 1) === date}
           current={tickDate === date}
+          onMouseOver={() => console.log('hovered', tickDate) || onDateChanged(tickDate)}
         />
       ))}
       <Marker

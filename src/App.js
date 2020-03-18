@@ -21,13 +21,14 @@ function useDataForDate(countries, date) {
 
 function useTickingDate (from, to, tickRate = 100) {
   const [date, setDate] = useState(from);
+  const [ticking, setTicking] = useState(false);
 
   useEffect(() => {
     const f = moment(from);
     const t = moment(to);
     const d = moment(date);
 
-    if (f.isSameOrAfter(t, 'day') || d.clone().isSameOrAfter(t, 'day')) {
+    if (!ticking || f.isSameOrAfter(t, 'day') || d.clone().isSameOrAfter(t, 'day')) {
       return;
     }
 
@@ -36,13 +37,16 @@ function useTickingDate (from, to, tickRate = 100) {
     }, tickRate);
 
     return () => clearTimeout(interval);
-  }, [from, to, date]);
+  }, [from, to, date, ticking]);
 
   useEffect(() => {
     setDate(from);
   }, [from, to]);
 
-  return date;
+
+  const startDateTicking = () => setTicking(true);
+  const stopDateTicking = () => setTicking(false);
+  return [date, setDate, startDateTicking, stopDateTicking];
 }
 
 function App() {
@@ -51,7 +55,7 @@ function App() {
 
   const toDate = sampleData ? sampleData[sampleData.length - 1].date : moment().subtract(1, 'day').format('M/D/YY');
   const fromDate = sampleData ? sampleData[0].date : toDate;
-  const date = useTickingDate(
+  const [date, setDate, startDateTicking] = useTickingDate(
     fromDate,
     toDate,
     120
@@ -71,7 +75,7 @@ function App() {
             from={fromDate}
             to={toDate}
             date={date}
-            onDateChanged={() => {}}
+            onDateChanged={setDate}
           />
         </DateScrubberContainer>
       </Content>

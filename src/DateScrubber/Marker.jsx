@@ -19,6 +19,7 @@ const Container = styled.div`
   width: 60px;
   height: 72px;
   left: ${props => (props.position * 100)}%;
+  margin-left: -20px;
   transition-duration: 300ms;
 
   display: flex;
