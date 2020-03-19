@@ -65,7 +65,7 @@ function loadData() {
             value: parseInt(d)
           })).filter(d => !!d.date)
         };
-      });
+      }).filter(d => d.country !== undefined);
 
       return data;
     })
