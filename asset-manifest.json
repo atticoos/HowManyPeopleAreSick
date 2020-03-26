@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "https://howmanypeoplearesick.com/static/css/main.e8c54ef2.chunk.css",
+    "main.js": "https://howmanypeoplearesick.com/static/js/main.4b3e149a.chunk.js",
+    "main.js.map": "https://howmanypeoplearesick.com/static/js/main.4b3e149a.chunk.js.map",
+    "runtime-main.js": "https://howmanypeoplearesick.com/static/js/runtime-main.446efb5d.js",
+    "runtime-main.js.map": "https://howmanypeoplearesick.com/static/js/runtime-main.446efb5d.js.map",
+    "static/js/2.73402e6b.chunk.js": "https://howmanypeoplearesick.com/static/js/2.73402e6b.chunk.js",
+    "static/js/2.73402e6b.chunk.js.map": "https://howmanypeoplearesick.com/static/js/2.73402e6b.chunk.js.map",
+    "index.html": "https://howmanypeoplearesick.com/index.html",
+    "precache-manifest.129ff77722835422afdb6dcf1c50ee3b.js": "https://howmanypeoplearesick.com/precache-manifest.129ff77722835422afdb6dcf1c50ee3b.js",
+    "service-worker.js": "https://howmanypeoplearesick.com/service-worker.js",
+    "static/css/main.e8c54ef2.chunk.css.map": "https://howmanypeoplearesick.com/static/css/main.e8c54ef2.chunk.css.map",
+    "static/js/2.73402e6b.chunk.js.LICENSE.txt": "https://howmanypeoplearesick.com/static/js/2.73402e6b.chunk.js.LICENSE.txt",
+    "static/media/background.png": "https://howmanypeoplearesick.com/static/media/background.29d5df28.png",
+    "static/media/bing.png": "https://howmanypeoplearesick.com/static/media/bing.c60e4f07.png",
+    "static/media/informationisbeautiful.png": "https://howmanypeoplearesick.com/static/media/informationisbeautiful.cb419ba7.png",
+    "static/media/jhu.png": "https://howmanypeoplearesick.com/static/media/jhu.60810e2b.png",
+    "static/media/ncov2019.png": "https://howmanypeoplearesick.com/static/media/ncov2019.e1ff104e.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.446efb5d.js",
+    "static/js/2.73402e6b.chunk.js",
+    "static/css/main.e8c54ef2.chunk.css",
+    "static/js/main.4b3e149a.chunk.js"
+  ]
+}
